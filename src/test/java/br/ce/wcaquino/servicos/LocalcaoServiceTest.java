@@ -16,6 +16,7 @@ import br.ce.wcaquino.entidades.Filme;
 import br.ce.wcaquino.entidades.Locacao;
 import br.ce.wcaquino.entidades.Usuario;
 import br.ce.wcaquino.exceptions.FilmeSemEstoqueException;
+import br.ce.wcaquino.exceptions.LocadoraException;
 import br.ce.wcaquino.utils.DataUtils;
 
 /**
@@ -154,4 +155,30 @@ public class LocalcaoServiceTest {
 //				
 //	}
 	
+	@Test
+	public void testeLocacao_usuarioVazio( ) throws FilmeSemEstoqueException {
+		// cenário
+		LocacaoService service = new LocacaoService();
+		Filme filme = new Filme("O poderoso chefão", 1, 4.0);
+		
+		//ação - usando forma ROBUSTA
+		try {
+			service.alugarFilme(null, filme);
+			Assert.fail();
+		} catch (LocadoraException e) {
+			Assert.assertThat(e.getMessage(), CoreMatchers.is("Usuario vazio"));
+		}
+	}
+	
+	@Test
+	public void testeLocacao_filmeVazio( ) throws FilmeSemEstoqueException, LocadoraException {
+		// cenário
+		LocacaoService service = new LocacaoService();
+		Usuario u = new Usuario("El Loco");
+		
+		//ação - usando forma ROBUSTA
+		service.alugarFilme(u, null);
+		
+		exception.expect(LocadoraException.class);
+	}
 }
