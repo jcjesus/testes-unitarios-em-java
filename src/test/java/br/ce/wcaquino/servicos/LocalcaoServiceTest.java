@@ -176,9 +176,12 @@ public class LocalcaoServiceTest {
 		LocacaoService service = new LocacaoService();
 		Usuario u = new Usuario("El Loco");
 		
+		//a config para dizer que espera uma exceção deve estar sempre antes da ececução do método
+		//que lançará a exception.
+		exception.expect(LocadoraException.class);
+
 		//ação - usando forma ROBUSTA
 		service.alugarFilme(u, null);
 		
-		exception.expect(LocadoraException.class);
 	}
 }
