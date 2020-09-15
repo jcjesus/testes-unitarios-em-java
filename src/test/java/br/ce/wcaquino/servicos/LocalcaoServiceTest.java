@@ -179,6 +179,7 @@ public class LocalcaoServiceTest {
 		//a config para dizer que espera uma exceção deve estar sempre antes da ececução do método
 		//que lançará a exception.
 		exception.expect(LocadoraException.class);
+		exception.expectMessage("Filme vazio");
 
 		//ação - usando forma ROBUSTA
 		service.alugarFilme(u, null);
