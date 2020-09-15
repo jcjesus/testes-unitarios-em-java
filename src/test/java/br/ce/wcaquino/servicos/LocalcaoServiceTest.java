@@ -181,7 +181,7 @@ public class LocalcaoServiceTest {
 		exception.expect(LocadoraException.class);
 		exception.expectMessage("Filme vazio");
 
-		//ação - usando forma ROBUSTA
+		//ação - usando forma NOVA
 		service.alugarFilme(u, null);
 		
 	}
