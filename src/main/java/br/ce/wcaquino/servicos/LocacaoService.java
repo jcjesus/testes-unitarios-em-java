@@ -4,17 +4,22 @@ import static br.ce.wcaquino.utils.DataUtils.adicionarDias;
 
 import java.util.Date;
 
-import org.junit.Assert;
-import org.junit.Test;
-
 import br.ce.wcaquino.entidades.Filme;
 import br.ce.wcaquino.entidades.Locacao;
 import br.ce.wcaquino.entidades.Usuario;
-import br.ce.wcaquino.utils.DataUtils;
+import br.ce.wcaquino.exceptions.FilmeSemEstoqueException;
 
 public class LocacaoService {
 	
-	public Locacao alugarFilme(Usuario usuario, Filme filme) {
+	public static final String FILME_SEM_ESTOQUE = "Filme sem estoque";
+
+	public Locacao alugarFilme(Usuario usuario, Filme filme) throws Exception {
+		
+		if(filme.getEstoque() == 0) {
+//			throw new Exception(FILME_SEM_ESTOQUE);
+			throw new FilmeSemEstoqueException();
+		}
+		
 		Locacao locacao = new Locacao();
 		locacao.setFilme(filme);
 		locacao.setUsuario(usuario);
