@@ -6,7 +6,11 @@ package br.ce.wcaquino.servicos;
 import java.util.Date;
 
 import org.hamcrest.CoreMatchers;
+import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ErrorCollector;
@@ -30,6 +34,35 @@ public class LocalcaoServiceTest {
 	
 	@Rule
 	public ExpectedException exception = ExpectedException.none();
+	
+	private LocacaoService service;
+	
+	// para uma variável não sofrer reset pelo junit ela precisa ser estática para ser considerada escopo de classe
+	// e não de teste.
+//	private static int contador = 0;
+	
+	@Before
+	public void setup() {
+//		System.out.println("Before");
+		service = new LocacaoService();
+//		contador++;
+//		System.out.println(contador);
+	}
+	
+//	@After
+	public void tearDown() {
+		System.out.println("After");
+	}
+	
+//	@BeforeClass
+	public static void setupClass() {
+		System.out.println("Before Class");
+	}
+	
+//	@AfterClass
+	public static void tearDownClass() {
+		System.out.println("After Class");
+	}
 	
 //	@Test
 //	public void teste() {
@@ -80,10 +113,9 @@ public class LocalcaoServiceTest {
 		Usuario u = new Usuario("Julio");
 		Filme f = new Filme("Robocop", 2, 8.0);
 		
-		LocacaoService s = new LocacaoService();
 		
 		//acao: onde vamos invocar o método de teste
-		Locacao locacao = s.alugarFilme(u, f);
+		Locacao locacao = service.alugarFilme(u, f);
 		
 		//validacao: onde coletar os resultados da ação com o cenário especificado
 		// data da locação, preço da locação e data de retorno
@@ -108,10 +140,9 @@ public class LocalcaoServiceTest {
 				Usuario u = new Usuario("Julio");
 				Filme f = new Filme("Robocop", 0, 8.0);
 				
-				LocacaoService s = new LocacaoService();
 				
 				//acao: onde vamos invocar o método de teste
-				s.alugarFilme(u, f);
+				service.alugarFilme(u, f);
 				
 	}
 	
@@ -158,7 +189,6 @@ public class LocalcaoServiceTest {
 	@Test
 	public void testeLocacao_usuarioVazio( ) throws FilmeSemEstoqueException {
 		// cenário
-		LocacaoService service = new LocacaoService();
 		Filme filme = new Filme("O poderoso chefão", 1, 4.0);
 		
 		//ação - usando forma ROBUSTA
@@ -173,7 +203,6 @@ public class LocalcaoServiceTest {
 	@Test
 	public void testeLocacao_filmeVazio( ) throws FilmeSemEstoqueException, LocadoraException {
 		// cenário
-		LocacaoService service = new LocacaoService();
 		Usuario u = new Usuario("El Loco");
 		
 		//a config para dizer que espera uma exceção deve estar sempre antes da ececução do método
